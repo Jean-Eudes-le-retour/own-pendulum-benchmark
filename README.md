@@ -5,7 +5,7 @@
 ## Description
 Program an e-puck robot to maintain an inverted pendulum up as long as possible.
 
-<p align="center">
+<p style="width: 50%" align="center">
   <img src="./preview/thumbnail.jpg">
 </p>
 
