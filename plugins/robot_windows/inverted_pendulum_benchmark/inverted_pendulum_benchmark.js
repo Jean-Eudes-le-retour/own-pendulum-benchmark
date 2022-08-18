@@ -17,7 +17,7 @@ window.robotWindow.receive = function(message, robot) {
     document.getElementById('force-display').innerHTML = f.toFixed(2);
   } else if (message.startsWith('success:')) {
     const newMessage = message.replace('success', 'confirm');
-    document.getElementById('achievement').style.color = 'green';
+    document.getElementById('time-display').style.color = 'green';
     this.send(newMessage)
   } else
     console.log("Received unknown message for robot '" + robot + "': '" + message + "'");
