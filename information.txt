@@ -4,4 +4,4 @@ Difficulty: 3
 Robot: E-puck
 Language: Python
 Commitment: 3
-Metric: time-longest
+Metric: time-duration
