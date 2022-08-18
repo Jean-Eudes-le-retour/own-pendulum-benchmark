@@ -2,6 +2,6 @@ publish: true
 type: benchmark
 world:
   file: worlds/inverted_pendulum.wbt
-  max-duration: 180
+  max-duration: 600
   metric: time-duration
 dockerCompose: theia:webots-project/controllers/inverted_pendulum/
