@@ -1,4 +1,2 @@
 1:ThomasOliverKimble/inverted-pendulum-benchmark-controller
-2:ThomasOliverKimble/inverted-pendulum-benchmark-controller1
-4:ThomasOliverKimble/inverted-pendulum-benchmark-controller2
-9:ThomasOliverKimble/inverted-pendulum-benchmark-controller3
+3:ThomasOliverKimble/inverted-pendulum-benchmark-controller1
