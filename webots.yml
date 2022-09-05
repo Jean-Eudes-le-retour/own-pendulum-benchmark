@@ -4,4 +4,4 @@ world:
   file: worlds/inverted_pendulum.wbt
   max-duration: 600
   metric: time-duration
-dockerCompose: theia:webots-project/controllers/inverted_pendulum/
+dockerCompose:theia:webots-project/controllers/inverted_pendulum/
