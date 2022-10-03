@@ -1,1 +1,2 @@
-1:Jean-Eudes-le-retour/inverted-pendulum-benchmark-hidden
+1:ThomasOliverKimble/inverted-pendulum-benchmark-controller:600.0:10.00.00:2022-09-05
+3:ThomasOliverKimble/inverted-pendulum-benchmark-controller1:9.416:00.09.41:2022-09-05
