@@ -1,1 +1,1 @@
-1:Jean-Eudes-le-retour/inverted-pendulum-benchmark-hidden:4.328:00.04.32:2022-10-04
+1:TotallyRandomGus/hidden-inverted-pendulum:0.376:00.00.37:2022-10-07
