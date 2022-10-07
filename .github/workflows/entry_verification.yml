@@ -22,8 +22,18 @@ jobs:
           cat <<< '1:'$user_repo > competitors.txt
         
       - name: Test competitor's controller
+        id: controller_test
+        continue-on-error: true
         uses: cyberbotics/benchmark-record-action@forkSystem 
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BOT_PAT_KEY: ${{ secrets.BOT_PAT_KEY }}
           BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
+          
+      - name: If controller works
+        if: ${{ steps.controller_test.outcome == 'success' }}
+        run: echo 'the repo seems to be working'
+      
+      - name: If repo misconfigured
+        if: ${{ steps.controller_test.outcome != 'success' }}
+        run: echo 'the repo seems to be completely BROKEN'
