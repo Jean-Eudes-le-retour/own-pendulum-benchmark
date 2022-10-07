@@ -1,0 +1,29 @@
+name: Verify a competitor's repo
+
+on:
+  issues:
+    types: [labeled]
+jobs:
+    
+  add-competitor:
+    if: ${{ github.event.issue.label.name == 'participation' }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump github.event
+        run: echo '${{ toJson(github.event) }}'
+        
+      - name: Check out the repo
+        uses: actions/checkout@v2
+        
+      - name: Verify repo link
+        run: |
+          user_repo=$(grep -oE '[[:alnum:]._-]+/[[:alnum:]._-]+')
+          cat <<< '1:'$user_repo > competitors.txt
+        
+      - name: Test competitor's controller
+        uses: cyberbotics/benchmark-record-action@forkSystem 
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOT_PAT_KEY: ${{ secrets.BOT_PAT_KEY }}
+          BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
