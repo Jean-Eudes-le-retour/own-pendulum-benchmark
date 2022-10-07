@@ -6,7 +6,7 @@ on:
 jobs:
     
   add-competitor:
-    #if: ${{ github.event.issue.label.name == 'participation' }}
+    #if: ${{ contains(github.event.issue.labels.*.name, 'participation') }}
 
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +18,10 @@ jobs:
         
       - name: Verify repo link
         run: |
-          user_repo=$(grep -oE '[[:alnum:]._-]+/[[:alnum:]._-]+')
+          body_text=$'${{ github.event.issue.body }}'
+          echo $body_text
+          user_repo=$(grep -oE '[[:alnum:]._-]+/[[:alnum:]._-]+' <<< $body_text)
+          echo $user_repo
           cat <<< '1:'$user_repo > competitors.txt
         
       - name: Test competitor's controller
