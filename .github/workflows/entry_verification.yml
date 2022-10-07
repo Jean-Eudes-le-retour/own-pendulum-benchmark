@@ -6,7 +6,7 @@ on:
 jobs:
     
   add-competitor:
-    if: ${{ github.event.issue.label.name == 'participation' }}
+    #if: ${{ github.event.issue.label.name == 'participation' }}
 
     runs-on: ubuntu-latest
     steps:
