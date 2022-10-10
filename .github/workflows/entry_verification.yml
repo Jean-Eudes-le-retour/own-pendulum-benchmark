@@ -25,35 +25,48 @@ jobs:
       - name: Is repo link actually a repo?
         id: repo_check
         run: |
-          gh api \
+          gh api --silent \
           -H "Accept: application/vnd.github+json" \
           /repos/$USER_REPO
         continue-on-error: true
-      - name: If repo ref is broken, feedback in registration issue
-        if: ${{ steps.repo_check.outcome != 'success' }}
+      - name: If repo not visible, check invites
+        if: ${{ steps.repo_check.outcome == 'failure' }}
+        id: invites_check
+        run: |
+          invite_id=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            /user/repository_invitations | jq '.[] | select(.repository.full_name=="$USER_REPO") | .id')
+          gh api --silent \
+            --method PATCH \
+            -H "Accept: application/vnd.github+json" \
+            /user/repository_invitations/$invite_id
+        continue-on-error: true
+      - name: If no invites, problem with collab or link syntax
+        if: ${{ steps.invites_check.outcome == 'failure' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            There was a problem when checking your repository link. There might be a typo, look for extra spaces or punctuation.
+            There was a problem when checking your repository link. You haven't added the organizer as a collaborator or there is a typo in the link.
             
       - name: Is repo link a benchmark entry repo?
-        id: link_check
+        if: ${{ steps.repo_check.outcome == 'success' || steps.invites_check.outcome == 'success' }}
+        id: benchmark_check
         run: |
-          gh api \
+          gh api --silent \
             -H "Accept: application/vnd.github+json" \
             /repos/$USER_REPO/contents/webots.yml
         continue-on-error: true
-      - name: If repo link broken, feedback on registration issue
-        if: ${{ steps.link_check.outcome == 'failure' }}
+      - name: If not a benchmark repo, feedback on registration issue
+        if: ${{ steps.benchmark_check.outcome == 'failure' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            There was a problem when checking your repository link. You haven't added the organizer as a collaborator.
+            There was a problem when checking your repository link. It doesn't seem to be a benchmark repository.
         
       - name: Does repo have a correctly named controller?
-        if: ${{ steps.link_check.outcome == 'success' }}
+        if: ${{ steps.benchmark_check.outcome == 'success' }}
         id: controller_check
         run: |
           svn export "https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER" --force \
@@ -61,6 +74,7 @@ jobs:
           ls "$DEFAULT_CONTROLLER/$DEFAULT_CONTROLLER"* -U
         env:
           DEFAULT_CONTROLLER: edit_me
+        continue-on-error: true
       - name: If no controller found, feedback on registration issue
         if: ${{ steps.controller_check.outcome == 'failure' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
