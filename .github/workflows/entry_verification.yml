@@ -7,8 +7,9 @@ jobs:
     
   verify-competitor:
     if: ${{ contains(github.event.issue.labels.*.name, 'participation') }}
-
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.REPO }}
     steps:
       - name: Dump github.event
         run: echo '${{ toJson(github.event) }}'
@@ -45,8 +46,6 @@ jobs:
           gh api \
             -H "Accept: application/vnd.github+json" \
             /repos/$USER_REPO/contents/webots.yml
-        env: 
-          GH_TOKEN: ${{ secrets.REPO }}
         continue-on-error: true
       - name: If repo link broken, feedback on registration issue
         if: ${{ steps.link_check.outcome != 'success' }}
