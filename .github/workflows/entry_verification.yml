@@ -34,7 +34,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
       - name: If repo link broken, feedback on registration issue
-        if: ${{ steps.link_check.outcome =! 'success' }}
+        if: ${{ steps.link_check.outcome != 'success' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.id }}
@@ -50,7 +50,7 @@ jobs:
         env:
           DEFAULT_CONTROLLER: edit_me
       - name: If no controller found, feedback on registration issue
-        if: ${{ steps.controller_check.outcome =! 'success' }}
+        if: ${{ steps.controller_check.outcome != 'success' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.id }}
