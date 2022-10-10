@@ -5,7 +5,7 @@ on:
     types: [labeled]
 jobs:
     
-  add-competitor:
+  verify-competitor:
     #if: ${{ contains(github.event.issue.labels.*.name, 'participation') }}
 
     runs-on: ubuntu-latest
@@ -16,7 +16,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
         
-      - name: Verify repo link
+      - name: Isolate repo link
         run: |
           body_text=$'${{ github.event.issue.body }}'
           echo $body_text
