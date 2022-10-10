@@ -37,7 +37,7 @@ jobs:
         if: ${{ steps.link_check.outcome != 'success' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
-          issue-number: ${{ github.event.issue.id }}
+          issue-number: ${{ github.event.issue.number }}
           body: |
             There was a problem when checking your repository link. There might be a typo or you haven't added the organizer as a collaborator.
         
@@ -53,6 +53,6 @@ jobs:
         if: ${{ steps.controller_check.outcome != 'success' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
-          issue-number: ${{ github.event.issue.id }}
+          issue-number: ${{ github.event.issue.number }}
           body: |
             There doesn't seem to be a controller in your repository. Please name your main controller with the default name "edit_me"
