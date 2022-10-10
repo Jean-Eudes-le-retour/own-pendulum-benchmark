@@ -23,11 +23,17 @@ jobs:
           user_repo=$(grep -oE '[[:alnum:]._-]+/[[:alnum:]._-]+' <<< $body_text)
           echo $user_repo
           cat <<< '1:'$user_repo > competitors.txt
+          echo "USER_REPO=$user_repo" >> $GITHUB_ENV
         
-      - name: Is repo link a repo?
-        run: echo 'TODO git checkout request'
-          
       - name: Is repo link a benchmark entry repo?
+        run: |
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            /repos/$USER_REPO/contents/webots.yml
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: does repo have a correctly named controller?
         run: echo "TODO try and use repo controller and detect if no controller found"
       
       - name: Test competitor's controller
