@@ -35,7 +35,7 @@ jobs:
         run: |
           invite_id=$(gh api \
             -H "Accept: application/vnd.github+json" \
-            /user/repository_invitations | jq '.[] | select(.repository.full_name=="$USER_REPO") | .id')
+            /user/repository_invitations | jq '.[] | select(.repository.full_name=="${{ env.USER_REPO }}") | .id')
           echo $invite_id
           gh api --silent \
             --method PATCH \
