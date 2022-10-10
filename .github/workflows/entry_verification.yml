@@ -6,7 +6,7 @@ on:
 jobs:
     
   verify-competitor:
-    #if: ${{ contains(github.event.issue.labels.*.name, 'participation') }}
+    if: ${{ contains(github.event.issue.labels.*.name, 'participation') }}
 
     runs-on: ubuntu-latest
     steps:
