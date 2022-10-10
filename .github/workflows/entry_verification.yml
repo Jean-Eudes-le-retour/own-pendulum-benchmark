@@ -35,7 +35,7 @@ jobs:
           
       - name: does repo have a correctly named controller?
         run: |
-          svn export 'https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER' --force \
+          svn export "https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER" --force \
             --username 'example@example.com' --password $GITHUB_TOKEN --quiet --non-interactive
           ls "$DEFAULT_CONTROLLER/$DEFAULT_CONTROLLER"* -U
         env:
