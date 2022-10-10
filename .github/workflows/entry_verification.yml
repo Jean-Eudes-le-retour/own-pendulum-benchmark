@@ -32,13 +32,27 @@ jobs:
             /repos/$USER_REPO/contents/webots.yml
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: does repo have a correctly named controller?
+        continue-on-error: true
+      - name: If repo link broken, feedback on registration issue
+        if: ${{ steps.link_check.outcome =! 'success' }}
+        uses: peter-evans/create-or-update-comment@v2.0.0
+        with:
+          issue-number: ${{ github.event.issue.id }}
+          body: |
+            There was a problem when checking your repository link. There might be a typo or you haven't added the organizer as a collaborator.
+        
+      - name: Does repo have a correctly named controller?
+        id: controller_check
         run: |
           svn export "https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER" --force \
             --username 'example@example.com' --password $GITHUB_TOKEN --quiet --non-interactive
           ls "$DEFAULT_CONTROLLER/$DEFAULT_CONTROLLER"* -U
         env:
           DEFAULT_CONTROLLER: edit_me
-      - name: If controller works
-        run: echo 'the repo seems to be working'
+      - name: If no controller found, feedback on registration issue
+        if: ${{ steps.controller_check.outcome =! 'success' }}
+        uses: peter-evans/create-or-update-comment@v2.0.0
+        with:
+          issue-number: ${{ github.event.issue.id }}
+          body: |
+            There doesn't seem to be a controller in your repository. Please name your main controller with the default name "edit_me"
