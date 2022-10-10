@@ -8,8 +8,7 @@ jobs:
   verify-competitor:
     if: ${{ contains(github.event.issue.labels.*.name, 'participation') }}
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.REPO }}
+    
     steps:
       - name: Dump github.event
         run: echo '${{ toJson(github.event) }}'
@@ -24,6 +23,8 @@ jobs:
         
       - name: Is repo link actually a repo?
         id: repo_check
+        env:
+          GH_TOKEN: ${{ secrets.REPO }}
         run: |
           gh api \
           -H "Accept: application/vnd.github+json" \
@@ -39,13 +40,15 @@ jobs:
             
       - name: Is repo link a benchmark entry repo?
         id: link_check
+        env:
+          GH_TOKEN: ${{ secrets.REPO }}
         run: |
           gh api \
             -H "Accept: application/vnd.github+json" \
             /repos/$USER_REPO/contents/webots.yml
         continue-on-error: true
       - name: If repo link broken, feedback on registration issue
-        if: ${{ steps.link_check.outcome != 'success' }}
+        if: ${{ steps.link_check.outcome == 'failure' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -53,6 +56,7 @@ jobs:
             There was a problem when checking your repository link. You haven't added the organizer as a collaborator.
         
       - name: Does repo have a correctly named controller?
+        if: ${{ steps.link_check.outcome == 'success' }}
         id: controller_check
         run: |
           svn export "https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER" --force \
@@ -61,7 +65,7 @@ jobs:
         env:
           DEFAULT_CONTROLLER: edit_me
       - name: If no controller found, feedback on registration issue
-        if: ${{ steps.controller_check.outcome != 'success' }}
+        if: ${{ steps.controller_check.outcome == 'failure' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
