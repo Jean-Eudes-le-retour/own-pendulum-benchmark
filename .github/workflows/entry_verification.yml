@@ -22,10 +22,10 @@ jobs:
           echo $body_text
           user_repo=$(grep -oE '[[:alnum:]._-]+/[[:alnum:]._-]+' <<< $body_text)
           echo $user_repo
-          cat <<< '1:'$user_repo > competitors.txt
           echo "USER_REPO=$user_repo" >> $GITHUB_ENV
         
       - name: Is repo link a benchmark entry repo?
+        id: link_check
         run: |
           gh api \
             -H "Accept: application/vnd.github+json" \
@@ -34,21 +34,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: does repo have a correctly named controller?
-        run: echo "TODO try and use repo controller and detect if no controller found"
-      
-      - name: Test competitor's controller
-        id: controller_test
-        continue-on-error: true
-        uses: cyberbotics/benchmark-record-action@forkSystem 
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BOT_PAT_KEY: ${{ secrets.BOT_PAT_KEY }}
-          BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
-          
+        run: |
+          svn export 'https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER' --force \
+            --username 'example@example.com' --password $GITHUB_TOKEN --quiet --non-interactive
+          ls "$DEFAULT_CONTROLLER/$DEFAULT_CONTROLLER"* -U
+        env:
+          DEFAULT_CONTROLLER: edit_me
       - name: If controller works
-        if: ${{ steps.controller_test.outcome == 'success' }}
         run: echo 'the repo seems to be working'
-      
-      - name: If repo misconfigured
-        if: ${{ steps.controller_test.outcome != 'success' }}
-        run: echo 'the repo seems to be completely BROKEN'
