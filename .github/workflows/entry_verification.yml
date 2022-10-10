@@ -8,7 +8,8 @@ jobs:
   verify-competitor:
     if: ${{ contains(github.event.issue.labels.*.name, 'participation') }}
     runs-on: ubuntu-latest
-    
+    env:
+      GH_TOKEN: ${{ secrets.REPO_TOKEN }}
     steps:
       - name: Dump github.event
         run: echo '${{ toJson(github.event) }}'
@@ -23,8 +24,6 @@ jobs:
         
       - name: Is repo link actually a repo?
         id: repo_check
-        env:
-          GH_TOKEN: ${{ secrets.REPO }}
         run: |
           gh api \
           -H "Accept: application/vnd.github+json" \
@@ -40,8 +39,6 @@ jobs:
             
       - name: Is repo link a benchmark entry repo?
         id: link_check
-        env:
-          GH_TOKEN: ${{ secrets.REPO }}
         run: |
           gh api \
             -H "Accept: application/vnd.github+json" \
@@ -60,7 +57,7 @@ jobs:
         id: controller_check
         run: |
           svn export "https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER" --force \
-            --username 'example@example.com' --password ${{ secrets.REPO }} --quiet --non-interactive
+            --username 'example@example.com' --password ${{ secrets.REPO_TOKEN }} --quiet --non-interactive
           ls "$DEFAULT_CONTROLLER/$DEFAULT_CONTROLLER"* -U
         env:
           DEFAULT_CONTROLLER: edit_me
