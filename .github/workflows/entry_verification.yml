@@ -24,6 +24,10 @@ jobs:
           echo $user_repo
           cat <<< '1:'$user_repo > competitors.txt
         
+      - name: Is repo link a repo?
+      
+      - name: Is repo link a benchmark entry repo?
+      
       - name: Test competitor's controller
         id: controller_test
         continue-on-error: true
