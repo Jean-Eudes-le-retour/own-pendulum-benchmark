@@ -25,8 +25,10 @@ jobs:
           cat <<< '1:'$user_repo > competitors.txt
         
       - name: Is repo link a repo?
-      
+        run: echo 'TODO git checkout request'
+          
       - name: Is repo link a benchmark entry repo?
+        run: echo "TODO try and use repo controller and detect if no controller found"
       
       - name: Test competitor's controller
         id: controller_test
