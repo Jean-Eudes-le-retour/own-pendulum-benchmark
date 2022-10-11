@@ -14,5 +14,4 @@ jobs:
         uses: cyberbotics/benchmark-record-action@forkSystem 
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BOT_PAT_KEY: ${{ secrets.BOT_PAT_KEY }}
-          BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
+          BOT_PAT_KEY: ${{ secrets.REPO_TOKEN }}
