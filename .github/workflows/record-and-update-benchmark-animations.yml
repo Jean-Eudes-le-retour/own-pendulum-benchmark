@@ -10,8 +10,8 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-        
+
       - name: Record and update Benchmark animations
         uses: cyberbotics/benchmark-record-action@forkSystem 
         with:
-          BOT_PAT_KEY: ${{ secrets.REPO_TOKEN }}
+          bot_pat_key: ${{ secrets.REPO_TOKEN }}
