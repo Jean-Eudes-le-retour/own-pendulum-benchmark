@@ -1,3 +1,4 @@
 1:TotallyRandomGus/visible-pendulum-benchmark:4.328:00.04.32:2022-10-10
 7:TotallyRandomGus/my-super-pendulum-controller
 8:TotallyRandomGus/inverted-pendulum-controller
+9:TotallyRandomGus/visible-pendulum-benchmark
