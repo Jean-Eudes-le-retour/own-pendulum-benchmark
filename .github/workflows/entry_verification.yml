@@ -54,8 +54,9 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: |
-            There was a problem when checking your repository link. You haven't added the organizer as a collaborator or there is a typo in the link.
+          body: >
+            There was a problem when checking your repository link.
+            You haven't added the organizer as a collaborator or there is a typo in the link.
             
       - name: Is repo link a benchmark entry repo?
         if: ${{ steps.repo_check.outcome == 'success' || steps.invites_check.outcome == 'success' }}
@@ -70,8 +71,9 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: |
-            There was a problem when checking your repository link. It doesn't seem to be a benchmark repository.
+          body: >
+            There was a problem when checking your repository link.
+            It doesn't seem to be a benchmark repository.
         
       - name: Does repo have a correctly named controller?
         if: ${{ steps.benchmark_check.outcome == 'success' }}
@@ -88,8 +90,9 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: |
-            There doesn't seem to be a controller in your repository. Please name your main controller with the default name "edit_me"
+          body: >
+            There doesn't seem to be a controller in your repository.
+            Please name your main controller with the default name "edit_me"
       
       - name: Everything is in order, finish competitor registration
         if: ${{ steps.controller_check.outcome == 'success' }}
