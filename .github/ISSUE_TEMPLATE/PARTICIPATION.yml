@@ -8,7 +8,7 @@ body:
 - type: input
   id: repo_link
   attributes:
-    label: Github repository link
+    label: GitHub repository link
     description: Paste here your GitHub username and your repository name with a / in between
     placeholder: username/repositoryName
   validations:
