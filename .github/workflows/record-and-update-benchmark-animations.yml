@@ -14,4 +14,4 @@ jobs:
       - name: Record and update Benchmark animations
         uses: cyberbotics/benchmark-record-action@forkSystem 
         with:
-          bot_pat_key: ${{ secrets.REPO_TOKEN }}
+          push_token: ${{ secrets.REPO_TOKEN }}
