@@ -17,7 +17,18 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Add competitor to file
-        run: echo $(echo '${{ github.event.issue.body }}' | tr -d [:space:] | sed 's/###GitHubrepositorylink/${{ github.event.issue.number }}:/') >> competitors.txt
+        run: |
+          body_text=$'${{ github.event.issue.body }}'
+          echo $body_text
+          regex='github.com/([[[:alnum:]._-]+/[[:alnum:]._-]+)'
+          if [[ $body_text =~ $regex ]]
+          then
+              user_repo="${BASH_REMATCH[1]}"
+              echo "${user_repo}"
+              echo "${{ github.event.issue.number }}:$user_repo" >> competitors.txt
+          else
+              exit 1
+          fi
 
       - name: Commit files
         run: |
@@ -29,4 +40,4 @@ jobs:
 
       - uses: peter-evans/close-issue@v1
         with:
-          comment: Here comes a new challenger! You have been added to the benchmark ranking.
+          comment: Here comes a new challenger! You have been added to the benchmark leaderboard.
