@@ -9,7 +9,7 @@ on:
     inputs:
       repo_link:
         description: id:username/repoName
-        required: true
+        default: 7:TotallyRandomGus/my-super-pendulum-controller
 
 jobs:
   record:
@@ -22,5 +22,5 @@ jobs:
         uses: cyberbotics/benchmark-record-action@forkSystem 
         with:
           fetch_token: ${{ secrets.REPO_TOKEN }}
-          individual_evaluation: ${{ inputs.repo_link }}
+          #individual_evaluation: ${{ inputs.repo_link }}
           
