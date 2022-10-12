@@ -23,5 +23,3 @@ jobs:
         with:
           fetch_token: ${{ secrets.REPO_TOKEN }}
           individual_evaluation: ${{ inputs.repo_link }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
