@@ -9,7 +9,7 @@ on:
     inputs:
       repo_link:
         description: id:username/repoName
-        default: 7:TotallyRandomGus/my-super-pendulum-controller
+        required: true
 
 jobs:
   record:
