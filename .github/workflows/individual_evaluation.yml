@@ -22,5 +22,5 @@ jobs:
         uses: cyberbotics/benchmark-record-action@forkSystem 
         with:
           fetch_token: ${{ secrets.REPO_TOKEN }}
-          #individual_evaluation: ${{ inputs.repo_link }}
+          individual_evaluation: ${{ inputs.repo_link }}
           
