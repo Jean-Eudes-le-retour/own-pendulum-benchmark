@@ -39,6 +39,6 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Your ranking is going to be updated at regular intervals.
-            If you want us to re-evaluate your controller at any time, add a new comment containing "Re-evaluate"
+            If you want us to re-evaluate your controller at any time, add a new comment containing the word "run".
         env:
           GH_TOKEN: ${{ github.token }}
