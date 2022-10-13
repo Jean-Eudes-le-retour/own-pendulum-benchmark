@@ -16,7 +16,7 @@ on:
 
 jobs:
   record:
-    if: ${{ contains(github.event.issue.labels.*.name, 'registration') && contains(github.event.issue.labels.*.name, 'accepted') && contains(github.event.issue.comment.body, 'ready') }}
+    if: ${{ contains(github.event.issue.labels.*.name, 'registration') && contains(github.event.issue.labels.*.name, 'accepted') && contains(github.event.comment.body, 'ready') }}
     runs-on: ubuntu-latest
     steps:
       - name: Dump github.event
