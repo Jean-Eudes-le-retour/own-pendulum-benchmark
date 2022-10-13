@@ -99,7 +99,7 @@ jobs:
             --method POST \
             -H "Accept: application/vnd.github+json" \
             /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
-            -f labels='pending'
+            --input - <<< jq -n '{"labels":["pending"]}'
       - name: Prompt on how to retry
         if: ${{ steps.if_error.outcome == 'success' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
@@ -116,4 +116,4 @@ jobs:
             --method POST \
             -H "Accept: application/vnd.github+json" \
             /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
-            -f labels='accepted'
+            --input - <<< jq -n '{"labels":["accepted"]}'
