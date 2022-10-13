@@ -1,15 +1,17 @@
 name: Remove user from list when asked
 
 on:
-  issues:
-    types: [edited]
+  issue_comment:
+    types: [created]
 env: 
   GH_TOKEN: ${{ github.token }}
 jobs:
   reset-entry:
     if: >
       contains(github.event.issue.labels.*.name, 'registration') &&
-      contains(github.event.issue.labels.*.name, 'accepted')
+      contains(github.event.issue.labels.*.name, 'accepted') &&
+      github.event.issue.user.login == github.event.comment.user.login &&
+      github.event.comment.body == 'unsubscribe'
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
