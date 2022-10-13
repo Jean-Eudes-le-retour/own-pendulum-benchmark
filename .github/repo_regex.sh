@@ -1,4 +1,4 @@
-body_text=$'${{ github.event.issue.body }}'
+body_text=$1
 echo $body_text
 regex='github.com/([[[:alnum:]._-]+/[[:alnum:]._-]+)'
 if [[ $body_text =~ $regex ]]
