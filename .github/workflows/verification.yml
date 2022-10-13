@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Isolate repo link
-        run: bash .github/repo_regex.sh "${{ github.event.issue.body }}"
+        run: bash .github/repo_regex.sh "${{ github.event.issue.body }}" "${{ github.event.issue.user.login }}"
         continue-on-error: true
         
       - name: Is repo link actually a repo?
@@ -48,7 +48,7 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: >
-            There was a problem when checking your repository link.
+            There was a problem when checking your repository "${{ env.USER_REPO }}".
             You haven't added the organizer as a collaborator or there is a typo in the link.
             
       - name: Is repo link a benchmark entry repo?
