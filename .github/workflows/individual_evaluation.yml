@@ -1,6 +1,6 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Individual competitor evaluation of their controller
+
+run-name: "Individual evaluation of competitor ${{ github.event.issue.number }} : ${{ github.event.issue.user.login }}"
 
 # Controls when the workflow will run
 on:
@@ -16,6 +16,7 @@ on:
 
 jobs:
   record:
+    if: ${{ contains(github.event.issue.labels.*.name, 'registration') && contains(github.event.issue.labels.*.name, 'accepted') && contains(github.event.issue.comment.body, 'ready') }}
     runs-on: ubuntu-latest
     steps:
       - name: Dump github.event
@@ -24,8 +25,23 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
+      - name: Isolate repo link
+        run: |
+          body_text=$'${{ github.event.issue.body }}'
+          echo $body_text
+          regex='github.com/([[[:alnum:]._-]+/[[:alnum:]._-]+)'
+          if [[ $body_text =~ $regex ]]
+          then
+              user_repo="${BASH_REMATCH[1]}"
+              echo "${user_repo}"
+          else
+              # exit 1
+              user_repo=""
+          fi
+          echo "USER_REPO=$user_repo" >> $GITHUB_ENV
+
       - name: Record and update Benchmark animations
         uses: cyberbotics/benchmark-record-action@forkSystem 
         with:
           fetch_token: ${{ secrets.REPO_TOKEN }}
-          individual_evaluation: ${{ inputs.repo_link }}
+          individual_evaluation: ${{ env.USER_REPO }}
