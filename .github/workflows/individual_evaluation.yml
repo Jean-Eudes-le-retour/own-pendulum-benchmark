@@ -27,8 +27,9 @@ jobs:
 
       - name: Isolate repo link
         run: |
-          echo "INDIVIDUAL_REF=$(grep ./competitors.txt -e '^${{ github.event.issue.number }}:.*')" >> $GITHUB_ENV
-          echo $INDIVIDUAL_REF
+          solo_reference=$( grep ./competitors.txt -e '^${{ github.event.issue.number }}:.*' )
+          echo $solo_reference
+          echo "INDIVIDUAL_REF=$solo_reference" >> $GITHUB_ENV
 
       - name: Record and update Benchmark animations
         uses: cyberbotics/benchmark-record-action@forkSystem 
@@ -39,7 +40,7 @@ jobs:
       - name: Feedback on individual evaluation
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
-          issue-number: ${{ steps.feedback.outputs.comment-id }}
+          comment-id: ${{ steps.feedback.outputs.comment-id }}
           body: Re-evaluation finished! The leaderboard is up to date.
 
       - name: Delete request comment
