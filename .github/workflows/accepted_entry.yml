@@ -18,17 +18,8 @@ jobs:
         
       - name: Add competitor to file
         run: |
-          body_text=$'${{ github.event.issue.body }}'
-          echo $body_text
-          regex='github.com/([[[:alnum:]._-]+/[[:alnum:]._-]+)'
-          if [[ $body_text =~ $regex ]]
-          then
-              user_repo="${BASH_REMATCH[1]}"
-              echo "${user_repo}"
-              echo "${{ github.event.issue.number }}:$user_repo" >> competitors.txt
-          else
-              exit 1
-          fi
+          bash .github/repo_regex.sh "${{ github.event.issue.body }}"
+          echo "${{ github.event.issue.number }}:$user_repo" >> competitors.txt
 
       - name: Commit files
         run: |

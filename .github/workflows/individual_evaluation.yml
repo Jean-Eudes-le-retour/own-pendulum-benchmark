@@ -32,4 +32,4 @@ jobs:
         uses: cyberbotics/benchmark-record-action@forkSystem 
         with:
           fetch_token: ${{ secrets.REPO_TOKEN }}
-          individual_evaluation: ${{ env.USER_REPO }}
+          individual_evaluation: "${{ github.event.issue.number }}:${{ env.USER_REPO }}"

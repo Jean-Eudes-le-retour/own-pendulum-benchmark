@@ -1,4 +1,6 @@
 name: Record and update Benchmark animations
+run-name: "General evaluation of all competitors"
+
 on:
   workflow_dispatch:
 # Uncomment to run every midnight
