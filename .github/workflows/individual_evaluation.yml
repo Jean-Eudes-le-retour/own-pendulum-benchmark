@@ -30,19 +30,21 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Isolate repo link
-        run: bash .github/repo_regex.sh "${{ github.event.issue.body }}" "${{ github.event.issue.user.login }}"
+        run: |
+          echo "INDIVIDUAL_REF=$(grep ./competitors.txt -e '^${{ github.event.issue.number }}:.*')" >> $GITHUB_ENV
+          echo $INDIVIDUAL_REF
 
       - name: Record and update Benchmark animations
         uses: cyberbotics/benchmark-record-action@forkSystem 
         with:
           fetch_token: ${{ secrets.REPO_TOKEN }}
-          individual_evaluation: "${{ github.event.issue.number }}:${{ env.USER_REPO }}"
+          individual_evaluation: "${{ env.INDIVIDUAL_REF }}"
       
       - name: Delete request comment
         run: |
           gh api \
             --method DELETE \
             -H "Accept: application/vnd.github+json" \
-            /repos/${{ env.USER_REPO }}/issues/comments/${{ github.event.comment.id }}
+            /repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}
         env:
           GH_TOKEN: ${{ github.token }}
