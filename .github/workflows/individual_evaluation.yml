@@ -37,7 +37,6 @@ jobs:
           individual_evaluation: "${{ env.INDIVIDUAL_REF }}"
 
       - name: Feedback on individual evaluation
-        id: feedback
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ steps.feedback.outputs.comment-id }}
