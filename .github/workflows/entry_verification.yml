@@ -1,94 +1,9 @@
-name: Verify a competitor's repo
+name: Verify a competitor's repo when registering from issue form
 
 on:
   issues:
     types: [labeled]
 jobs:
-    
   verify-competitor:
-    if: ${{ contains(github.event.issue.labels.*.name, 'registration') }}
-    runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.REPO_TOKEN }}
-    steps:
-      - name: Dump github.event
-        run: echo '${{ toJson(github.event) }}'
-        
-      - name: Isolate repo link
-        run: bash .github/repo_regex.sh "${{ github.event.issue.body }}"
-        continue-on-error: true
-        
-      - name: Is repo link actually a repo?
-        id: repo_check
-        run: |
-          gh api --silent \
-          -H "Accept: application/vnd.github+json" \
-          /repos/$USER_REPO
-        continue-on-error: true
-      - name: If repo not visible, check invites
-        if: ${{ steps.repo_check.outcome == 'failure' }}
-        id: invites_check
-        run: |
-          invite_id=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            /user/repository_invitations | jq '.[] | select(.repository.full_name=="${{ env.USER_REPO }}") | .id')
-          echo $invite_id
-          gh api --silent \
-            --method PATCH \
-            -H "Accept: application/vnd.github+json" \
-            /user/repository_invitations/$invite_id
-        continue-on-error: true
-      - name: If no invites, problem with collab or link syntax
-        if: ${{ steps.invites_check.outcome == 'failure' }}
-        uses: peter-evans/create-or-update-comment@v2.0.0
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: >
-            There was a problem when checking your repository link.
-            You haven't added the organizer as a collaborator or there is a typo in the link.
-            
-      - name: Is repo link a benchmark entry repo?
-        if: ${{ steps.repo_check.outcome == 'success' || steps.invites_check.outcome == 'success' }}
-        id: benchmark_check
-        run: |
-          gh api --silent \
-            -H "Accept: application/vnd.github+json" \
-            /repos/$USER_REPO/contents/webots.yml
-        continue-on-error: true
-      - name: If not a benchmark repo, feedback on registration issue
-        if: ${{ steps.benchmark_check.outcome == 'failure' }}
-        uses: peter-evans/create-or-update-comment@v2.0.0
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: >
-            There was a problem when checking your repository link.
-            It doesn't seem to be a benchmark repository.
-        
-      - name: Does repo have a correctly named controller?
-        if: ${{ steps.benchmark_check.outcome == 'success' }}
-        id: controller_check
-        run: |
-          svn export "https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER" --force \
-            --username 'example@example.com' --password ${{ secrets.REPO_TOKEN }} --quiet --non-interactive
-          ls "$DEFAULT_CONTROLLER/$DEFAULT_CONTROLLER"* -U
-        env:
-          DEFAULT_CONTROLLER: edit_me
-        continue-on-error: true
-      - name: If no controller found, feedback on registration issue
-        if: ${{ steps.controller_check.outcome == 'failure' }}
-        uses: peter-evans/create-or-update-comment@v2.0.0
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: >
-            There doesn't seem to be a controller in your repository.
-            Please name your main controller with the default name "edit_me"
-      
-      - name: Everything is in order, finish competitor registration
-        if: ${{ steps.controller_check.outcome == 'success' }}
-        run: |
-          curl -s -S \
-            -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
-            -d '{"labels":["accepted"]}'
+    if: ${{ join(github.event.issue.labels.*.name) == 'registration' }}
+    uses: ./.github/workflows/verification.yml

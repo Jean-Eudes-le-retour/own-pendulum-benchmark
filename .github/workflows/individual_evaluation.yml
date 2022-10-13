@@ -16,7 +16,13 @@ on:
 
 jobs:
   record:
-    if: ${{ contains(github.event.issue.labels.*.name, 'registration') && contains(github.event.issue.labels.*.name, 'accepted') && contains(github.event.comment.body, 'ready') }}
+    if: >
+      ${{
+        contains(github.event.issue.labels.*.name, 'registration') &&
+        contains(github.event.issue.labels.*.name, 'accepted') &&
+        github.event.issue.user.login == github.event.comment.user.login &&
+        contains(github.event.comment.body, 'run')
+      }}
     runs-on: ubuntu-latest
     steps:
       - name: Dump github.event
@@ -33,3 +39,11 @@ jobs:
         with:
           fetch_token: ${{ secrets.REPO_TOKEN }}
           individual_evaluation: "${{ github.event.issue.number }}:${{ env.USER_REPO }}"
+      
+      - name: Delete request comment
+        run: >
+          gh api
+            --method DELETE
+            -H "Accept: application/vnd.github+json"
+            /repos/${{ env.USER_REPO }}/issues/comments/${{ github.event.comment.id }}
+        env: [GH_TOKEN: ${{ github.token }}]
