@@ -86,6 +86,7 @@ jobs:
             Please name your main controller with the default name "edit_me"
       
       - name: Adding the "pending" label if there was any problem
+        id: if_error
         if: >
           ${{
             steps.repo_check.outcome == 'failure' ||
@@ -100,6 +101,14 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
             -d '{"labels":["pending"]}'
+      - name: Prompt on how to retry
+        if: ${{ steps.if_error.outcome == 'success' }}
+        uses: peter-evans/create-or-update-comment@v2.0.0
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: >
+            Please do the necessary to fix this problem.
+            When you have finished solving the issue, please try again by commenting "retry"
 
       - name: Everything is in order, finish competitor registration
         if: ${{ steps.controller_check.outcome == 'success' }}
