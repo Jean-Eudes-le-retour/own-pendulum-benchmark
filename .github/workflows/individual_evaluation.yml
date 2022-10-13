@@ -10,11 +10,17 @@ on:
       repo_link:
         description: id:username/repoName
         default: 7:TotallyRandomGus/my-super-pendulum-controller
+  
+  issue_comment:
+    types: [created]
 
 jobs:
   record:
     runs-on: ubuntu-latest
     steps:
+      - name: Dump github.event
+        run: echo '${{ toJson(github.event) }}'
+
       - name: Check out the repo
         uses: actions/checkout@v2
 
