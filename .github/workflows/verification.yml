@@ -95,12 +95,11 @@ jobs:
           steps.benchmark_check.outcome == 'failure' ||
           steps.controller_check.outcome == 'failure'
         run: |
-          curl -s -S \
-            -X POST \
+          gh api --silent \
+            --method POST \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
-            -d '{"labels":["pending"]}'
+            /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
+            -f labels='pending'
       - name: Prompt on how to retry
         if: ${{ steps.if_error.outcome == 'success' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
@@ -113,9 +112,8 @@ jobs:
       - name: Everything is in order, finish competitor registration
         if: ${{ steps.controller_check.outcome == 'success' }}
         run: |
-          curl -s -S \
-            -X POST \
+          gh api --silent \
+            --method POST \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
-            -d '{"labels":["accepted"]}'
+            /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
+            -f labels='accepted'
