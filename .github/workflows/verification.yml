@@ -1,5 +1,4 @@
 name: 'Entry verification'
-description: 'Manages the verification of one's repository link'
 on:
   workflow_call:
 jobs:
