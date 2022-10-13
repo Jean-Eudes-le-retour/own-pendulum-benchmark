@@ -14,7 +14,7 @@ jobs:
         run: echo '${{ toJson(github.event) }}'
         
       - name: Checkout files
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Add competitor to file
         run: |

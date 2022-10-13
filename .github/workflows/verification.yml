@@ -12,7 +12,10 @@ jobs:
     steps:
       - name: Dump github.event
         run: echo '${{ toJson(github.event) }}'
-        
+
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
       - name: Isolate repo link
         run: bash .github/repo_regex.sh "${{ github.event.issue.body }}"
         continue-on-error: true
