@@ -6,7 +6,9 @@ on:
 jobs:
     
   add-competitor:
-    if: ${{ contains(github.event.issue.labels.*.name, 'registration') && contains(github.event.issue.labels.*.name, 'accepted') }}
+    if: >
+      contains(github.event.issue.labels.*.name, 'registration') &&
+      contains(github.event.issue.labels.*.name, 'accepted')
 
     runs-on: ubuntu-latest
     steps:

@@ -31,9 +31,11 @@ jobs:
         if: ${{ steps.repo_check.outcome == 'failure' }}
         id: invites_check
         run: |
-          invite_id=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            /user/repository_invitations | jq '.[] | select(.repository.full_name=="${{ env.USER_REPO }}") | .id')
+          invite_id=$( \
+            gh api \
+              -H "Accept: application/vnd.github+json" \
+              /user/repository_invitations | jq '.[] | select(.repository.full_name=="${{ env.USER_REPO }}") | .id' \
+          )
           echo $invite_id
           gh api --silent \
             --method PATCH \
@@ -88,12 +90,10 @@ jobs:
       - name: Adding the "pending" label if there was any problem
         id: if_error
         if: >
-          ${{
-            steps.repo_check.outcome == 'failure' ||
-            steps.invites_check.outcome == 'failure' ||
-            steps.benchmark_check.outcome == 'failure' ||
-            steps.controller_check.outcome == 'failure'
-          }}
+          steps.repo_check.outcome == 'failure' ||
+          steps.invites_check.outcome == 'failure' ||
+          steps.benchmark_check.outcome == 'failure' ||
+          steps.controller_check.outcome == 'failure'
         run: |
           curl -s -S \
             -X POST \

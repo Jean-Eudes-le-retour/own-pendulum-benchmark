@@ -17,12 +17,10 @@ on:
 jobs:
   record:
     if: >
-      ${{
-        contains(github.event.issue.labels.*.name, 'registration') &&
-        contains(github.event.issue.labels.*.name, 'accepted') &&
-        github.event.issue.user.login == github.event.comment.user.login &&
-        contains(github.event.comment.body, 'run')
-      }}
+      contains(github.event.issue.labels.*.name, 'registration') &&
+      contains(github.event.issue.labels.*.name, 'accepted') &&
+      github.event.issue.user.login == github.event.comment.user.login &&
+      contains(github.event.comment.body, 'run')
     runs-on: ubuntu-latest
     steps:
       - name: Dump github.event
