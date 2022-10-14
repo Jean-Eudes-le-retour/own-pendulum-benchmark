@@ -14,7 +14,6 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Fetch default controller name
-        if: ${{ steps.benchmark_check.outcome == 'success' }}
         uses: tw3lveparsecs/github-actions-setvars@v0.1
         with:
           envFilePath: ./.github/variables/default.env
