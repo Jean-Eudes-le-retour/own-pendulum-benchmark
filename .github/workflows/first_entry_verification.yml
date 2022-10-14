@@ -5,6 +5,7 @@ on:
     types: [labeled]
 jobs:
   welcome-msg:
+    if: ${{ join(github.event.issue.labels.*.name) == 'registration' }}
     runs-on: ubuntu-latest
     steps:
       - name: Welcome message
@@ -17,7 +18,6 @@ jobs:
             Please note that the automated actions might take a bit of time before showing any feedback.
   verify-competitor:
     needs: [welcome-msg]
-    if: ${{ join(github.event.issue.labels.*.name) == 'registration' }}
     uses: ./.github/workflows/verification.yml
     secrets:
       REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
