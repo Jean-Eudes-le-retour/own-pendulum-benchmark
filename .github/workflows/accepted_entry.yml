@@ -1,8 +1,7 @@
 name: Add competitor to list when confirmed by tag
 
 on:
-  issues:
-    types: [labeled]
+  workflow_dispatch:
 jobs:
     
   add-competitor:
@@ -30,7 +29,7 @@ jobs:
             git config user.name "Benchmark_Acceptor"
             git add competitors.txt
             git commit -m "Here comes a new challenger!"
-      - run: git push
+            git push
 
       - uses: peter-evans/close-issue@v1
         with:
