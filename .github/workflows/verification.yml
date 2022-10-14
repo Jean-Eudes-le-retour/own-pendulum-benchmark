@@ -93,7 +93,6 @@ jobs:
       - name: Adding the "pending" label if there was any problem
         id: if_error
         if: >
-          steps.repo_check.outcome == 'failure' ||
           steps.invites_check.outcome == 'failure' ||
           steps.benchmark_check.outcome == 'failure' ||
           steps.controller_check.outcome == 'failure'
