@@ -38,17 +38,28 @@ jobs:
           envFilePath: ./.github/variables/default.env
 
       - name: Record and update Benchmark animations
+        id: webots_test
         uses: cyberbotics/benchmark-record-action@forkSystem 
         with:
           fetch_token: ${{ secrets.REPO_TOKEN }}
           individual_evaluation: "${{ env.INDIVIDUAL_REF }}"
           default_controller_name: ${{ env.DEFAULT_CONTROLLER }}
+        continue-on-error: true
 
-      - name: Feedback on individual evaluation
+      - name: Feedback on success
+        if: ${{ steps.webots_test.outcome == 'success' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           comment-id: ${{ steps.feedback.outputs.comment-id }}
           body: Re-evaluation finished! The leaderboard is up to date.
+
+      - name: Feedback on failure
+        if: ${{ steps.webots_test.outcome == 'failure' }}
+        uses: peter-evans/create-or-update-comment@v2.0.0
+        with:
+          comment-id: ${{ steps.feedback.outputs.comment-id }}
+          body: There was a problem. Look at action logs for more details
+
 
       - name: Delete request comment
         run: |
