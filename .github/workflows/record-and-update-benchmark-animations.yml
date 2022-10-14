@@ -1,4 +1,4 @@
-name: Record and update Benchmark animations
+name: Record and update all competitors' performances
 run-name: "General evaluation of all competitors"
 
 on:

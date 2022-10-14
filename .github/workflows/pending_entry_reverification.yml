@@ -1,4 +1,4 @@
-name: Verify a competitor's repo when registering from issue form
+name: Rerun the tests if there was a problem
 
 on:
   issue_comment:
