@@ -34,7 +34,9 @@ jobs:
 
       - uses: peter-evans/close-issue@v1
         with:
-          comment: Here comes a new challenger! You have been added to the benchmark leaderboard.
+          comment: |
+            #### Here comes a new challenger!
+            You have been added to the benchmark leaderboard.
 
       - name: Controller (re-)evaluation comment
         uses: peter-evans/create-or-update-comment@v2.0.0
@@ -42,8 +44,10 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Your ranking is going to be updated at regular intervals.
+
             If you want us to re-evaluate your controller at any time, add a new comment containing the word "run".
             If you want to unsubscribe your repository from the list, add a new comment containing the word "unsubscribe".
-            Please note that the commands might take a few minutes before posting feedback messages. 
+
+            Please note that the commands might take a few minutes before posting feedback messages. Refreshing the page can help seeing newer messages.
         env:
           GH_TOKEN: ${{ github.token }}
