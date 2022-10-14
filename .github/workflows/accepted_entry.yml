@@ -17,11 +17,12 @@ jobs:
         
       - name: Checkout files
         uses: actions/checkout@v3
-        
+
+      - name: Isolate repo link
+        run: bash .github/repo_regex.sh "${{ github.event.issue.body }}" "${{ github.event.issue.user.login }}"
+
       - name: Add competitor to file
-        run: |
-          bash .github/repo_regex.sh "${{ github.event.issue.body }}"  "${{ github.event.issue.user.login }}"
-          echo "${{ github.event.issue.number }}:$USER_REPO" >> competitors.txt
+        run: echo "${{ github.event.issue.number }}:$USER_REPO" >> competitors.txt
 
       - name: Commit files
         run: |
