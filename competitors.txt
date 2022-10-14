@@ -1,5 +1,5 @@
-7:TotallyRandomGus/my-super-pendulum-controller:1.26:00.01.26:2022-10-13
-12:TotallyRandomGus/visible-pendulum-benchmark:0.376:00.00.37:2022-10-14
-13:TotallyRandomGus/hidden-inverted-pendulum:4.328:00.04.32:2022-10-14
-14:TotallyRandomGus/inverted-pendulum-controller:4.328:00.04.32:2022-10-14
-15:TotallyRandomGus/last_pendulum_repo.-:4.328:00.04.32:2022-10-14
+7:TotallyRandomGus/my-super-pendulum-controller:0.376:00.00.37:2022-10-14
+12:TotallyRandomGus/visible-pendulum-benchmark:0.38:00.00.38:2022-10-14
+13:TotallyRandomGus/hidden-inverted-pendulum:0.38:00.00.38:2022-10-14
+14:TotallyRandomGus/inverted-pendulum-controller:0.38:00.00.38:2022-10-14
+15:TotallyRandomGus/last_pendulum_repo.-:0.38:00.00.38:2022-10-14
