@@ -51,4 +51,5 @@ Everything should be good to go, you can modify the files in the controllers fol
 
 The supervisor controller is a special controller that is used to evaluate your controller's performance.
 
-Webots supports multiple programming languages, see the [Webots documentation](https://www.cyberbotics.com/doc/guide/language-setup) if you are interested. Be sure to name your main controller like the default controller (except for the extension) for it to be used in the leaderboard evaluation.
+Webots supports multiple programming languages, see the [Webots documentation](https://www.cyberbotics.com/doc/guide/language-setup) if you are interested.
+Be sure to name your main controller like the default controller (except for the file extension) for it to be used in the leaderboard evaluation.
