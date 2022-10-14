@@ -124,4 +124,5 @@ jobs:
             --method DELETE \
             -H "Accept: application/vnd.github+json" \
             /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels/pending
+        continue-on-error: true
           
