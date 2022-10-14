@@ -1,6 +1,6 @@
 # Inverted Pendulum Benchmark
 
-[![Page Badge](https://badgen.net/badge/icon/Benchmark?label=Page)](https://cyberbotics.github.io/benchmark-page?url=https://github.com/cyberbotics/inverted-pendulum-benchmark/blob/main/worlds/inverted_pendulum.wbt)
+[![Page Badge](https://badgen.net/badge/icon/Benchmark?label=Page)](https://benchmark.webots.cloud/run?version=R2022b&url=https://github.com/Jean-Eudes-le-retour/own-pendulum-benchmark/blob/main/worlds/inverted_pendulum.wbt&type=benchmark)
 
 ## Description
 Program an e-puck robot to maintain an inverted pendulum up as long as possible.
@@ -26,7 +26,7 @@ Finally, click on the green "Create repository from template".
 
 ### Add the organizer as collaborator if you set your repository as private
 
-Go to your personal repository page (https://github.com/username/repositoryName).
+Go to your personal repository page (https://github.com/USERNAME/REPOSITORY_NAME).
 Next, go to the "Settings" tab and under "Access" click on the "Collaborators" section.
 You will then need to confirm the access by re-entering your GitHub password.
 When this is done you should see a "Manage access" box where you will see the current collaborators of the repo.
