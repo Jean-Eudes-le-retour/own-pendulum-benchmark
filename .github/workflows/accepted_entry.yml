@@ -21,7 +21,7 @@ jobs:
       - name: Add competitor to file
         run: |
           bash .github/repo_regex.sh "${{ github.event.issue.body }}"  "${{ github.event.issue.user.login }}"
-          echo "${{ github.event.issue.number }}:$user_repo" >> competitors.txt
+          echo "${{ github.event.issue.number }}:$USER_REPO" >> competitors.txt
 
       - name: Commit files
         run: |
