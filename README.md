@@ -21,22 +21,18 @@ Program an e-puck robot to maintain an inverted pendulum up as long as possible.
 
 [Click here](./generate) to create your own repository or do it manually by clicking on the green "Use this template" button.
 
-Then fill the "Repository name" field with a name for your controller.
-
+Fill the "Repository name" field with a name for your controller.
 Choose the visibility of your controller, keep it "Public" if you don't care about people looking at your controller code otherwise set it to "Private".
-
 Finally, click on the green "Create repository from template".
 
 ### Add the organizer as collaborator if you set your repository as private
 
-Go to your personal repository page (https://github.com/USERNAME/REPOSITORY_NAME).
+Go to your personal repository page (https://github.com/USERNAME/REPOSITORY_NAME) and go to the "Settings" tab.
 
-Next, go to the "Settings" tab and under "Access" click on the "Collaborators" section.
-
+Under "Access" click on the "Collaborators" section.
 You will then need to confirm the access by re-entering your GitHub password.
 
 When this is done you should see a "Manage access" box where you will see the current collaborators of the repo.
-
 Click on the "Add people" and search for "Jean-Eudes-le-retour". When you found the organizer, add them to the repository.
 
 ### Submit your entry by using posting an issue using the provided template
