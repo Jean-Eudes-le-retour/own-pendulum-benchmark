@@ -47,7 +47,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: >
+          body: |
             There was a problem when checking your repository "${{ env.USER_REPO }}".
             You haven't added the organizer as a collaborator or there is a typo in the link.
             
@@ -64,10 +64,15 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: >
+          body: |
             There was a problem when checking your repository link.
             It doesn't seem to be a benchmark repository.
-        
+
+      - name: Fetch default controller name
+        if: ${{ steps.benchmark_check.outcome == 'success' }}
+        uses: tw3lveparsecs/github-actions-setvars@v0.1
+        with:
+          envFilePath: ./.github/variables/default.env
       - name: Does repo have a correctly named controller?
         if: ${{ steps.benchmark_check.outcome == 'success' }}
         id: controller_check
@@ -75,15 +80,13 @@ jobs:
           svn export "https://github.com/$USER_REPO/trunk/controllers/$DEFAULT_CONTROLLER" --force \
             --username 'example@example.com' --password ${{ secrets.REPO_TOKEN }} --quiet --non-interactive
           ls "$DEFAULT_CONTROLLER/$DEFAULT_CONTROLLER"* -U
-        env:
-          DEFAULT_CONTROLLER: edit_me
         continue-on-error: true
       - name: If no controller found, feedback on registration issue
         if: ${{ steps.controller_check.outcome == 'failure' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: >
+          body: |
             There doesn't seem to be a controller in your repository.
             Please name your main controller with the default name "edit_me"
       

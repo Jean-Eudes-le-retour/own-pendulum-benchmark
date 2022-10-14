@@ -20,11 +20,14 @@ jobs:
       - name: Remove user from competitors.txt
         run: sed -i '/^${{ github.event.issue.number }}:.*/d' competitors.txt
 
+      - name: Remove user animation from storage
+        run: rm -r ./wb_animation_${{ github.event.issue.number }}
+
       - name: Push changes
         run: |
           git config --global user.name '${{ github.repository_owner }}'
           git config --global user.email '${{ github.repository_owner }}@users.noreply.github.com'
-          git commit -am "Removed competitor from list"
+          git commit -am "Removed competitor from benchmark"
           git push
 
       - name: Remove all labels
