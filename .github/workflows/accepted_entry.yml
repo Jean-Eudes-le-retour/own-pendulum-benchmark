@@ -43,5 +43,6 @@ jobs:
             Your ranking is going to be updated at regular intervals.
             If you want us to re-evaluate your controller at any time, add a new comment containing the word "run".
             If you want to unsubscribe your repository from the list, add a new comment containing the word "unsubscribe".
+            Please note that the commands might take a few minutes before posting feedback messages. 
         env:
           GH_TOKEN: ${{ github.token }}
