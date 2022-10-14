@@ -7,7 +7,7 @@ on:
     types: [created]
 
 jobs:
-  record:
+  feedback_message:
     if: >
       contains(github.event.issue.labels.*.name, 'registration') &&
       contains(github.event.issue.labels.*.name, 'accepted') &&
@@ -21,7 +21,12 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: Individual re-evaluation in progress...
-
+    outputs:
+      comment-id: ${{ steps.feedback.outputs.comment-id }}
+  record:
+    needs: feedback_message
+    runs-on: ubuntu-latest
+    steps:
       - name: Check out the repo
         uses: actions/checkout@v3
 
@@ -32,7 +37,6 @@ jobs:
           echo "INDIVIDUAL_REF=$solo_reference" >> $GITHUB_ENV
 
       - name: Fetch default controller name
-        if: ${{ steps.benchmark_check.outcome == 'success' }}
         uses: tw3lveparsecs/github-actions-setvars@v0.1
         with:
           envFilePath: ./.github/variables/default.env
@@ -50,14 +54,14 @@ jobs:
         if: ${{ steps.webots_test.outcome == 'success' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
-          comment-id: ${{ steps.feedback.outputs.comment-id }}
+          comment-id: ${{ needs.feedback_message.outputs.comment-id }}
           body: Re-evaluation finished! The leaderboard is up to date.
 
       - name: Feedback on failure
         if: ${{ steps.webots_test.outcome == 'failure' }}
         uses: peter-evans/create-or-update-comment@v2.0.0
         with:
-          comment-id: ${{ steps.feedback.outputs.comment-id }}
+          comment-id: ${{ needs.feedback_message.outputs.comment-id }}
           body: There was a problem. Look at action logs for more details
 
 
