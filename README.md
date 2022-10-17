@@ -27,7 +27,7 @@ Finally, click on the green "Create repository from template".
 
 ### Add the organizer as collaborator if you set your repository as private
 
-Go to your personal repository page (https://github.com/USERNAME/REPOSITORY_NAME) and go to the "Settings" tab.
+Go to your [personal repository page](./) and go to the "Settings" tab.
 
 Under "Access" click on the "Collaborators" section.
 You will then need to confirm the access by re-entering your GitHub password.
