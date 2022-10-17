@@ -19,7 +19,7 @@ Program an e-puck robot to maintain an inverted pendulum up as long as possible.
 
 ### Create your own entry repository from the template
 
-[Click here](./generate) to create your own repository or do it manually by clicking on the green "Use this template" button.
+[Click here](../../generate) to create your own repository or do it manually by clicking on the green "Use this template" button.
 
 Fill the "Repository name" field with a name for your controller.
 Choose the visibility of your controller, keep it "Public" if you don't care about people looking at your controller code otherwise set it to "Private".
