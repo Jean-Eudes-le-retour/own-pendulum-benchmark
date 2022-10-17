@@ -39,7 +39,7 @@ Click on the "Add people" and search for "Jean-Eudes-le-retour". When you found 
 
 After you added the organizer as a collaborator, go back to the main page of your repository and copy your full repository URL.
 
-Come back to this page and [click here](../../issues/new?assignees=&labels=registration&template=registration_form.yml&title=Registration+to+benchmark) to start your registration. If it doesn't work, you can do it manually by creating a new issue and choosing the "Registration to benchmark" template.
+Come back to this page and [click here](../../issues/new?assignees=&labels=registration&template=registration_form.yml&title=Registration+to+benchmark) to start your registration. If it doesn't work, you can do it manually by going to the "Issues" tab, creating a new issue and choosing the "Registration to benchmark" template.
 
 Paste your repository URL in the URL field and click the "Submit new issue" button.
 
