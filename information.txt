@@ -1,7 +1,7 @@
 Title: Inverted Pendulum
 Description: Program an e-puck robot to maintain an inverted pendulum up as long as possible.
-Difficulty: 3
+Difficulty: Bachelor
 Robot: E-puck
 Language: Python
-Commitment: 3
+Commitment: A couple of hours
 Metric: time-duration
